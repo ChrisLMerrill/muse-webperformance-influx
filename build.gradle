@@ -1,0 +1,64 @@
+apply plugin: 'java-library'
+apply plugin: 'maven'
+apply plugin: 'kotlin'
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+    mavenLocal()
+    jcenter()
+}
+
+version = 0.1
+group = 'com.webperformance.muse'
+
+dependencies {
+    compile 'com.webperformance.muse:muse-webperformance-measurements:0.3'
+    compile 'org.influxdb:influxdb-java:2.10'
+
+    testImplementation 'junit:junit:4.12'
+}
+
+// jar the sources
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+// jar the javadocs
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+// produce the sources and javadoc artifacts
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+// declare which packages Muse should scan for extensions
+jar {
+    manifest {
+        attributes 'muse-package': 'com.webperformance.muse.influx'
+    }
+}
+
+buildscript {
+    ext.kotlin_version = '1.2.0'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
