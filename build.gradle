@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.3.10'
+    ext.kotlin_version = '1.3.21'
     repositories {
         mavenCentral()
     }
@@ -9,7 +9,7 @@ buildscript {
 }
 
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.3.11'
+    id 'org.jetbrains.kotlin.jvm' version '1.3.21'
 }
 
 apply plugin: 'java-library'
@@ -27,10 +27,12 @@ group = 'com.webperformance.muse'
 
 dependencies {
     compile 'com.webperformance.muse:muse-webperformance-measurements:0.3'
+    testCompile 'org.musetest:muse-commandline:0.15'  // only needed for debugging via command-line execution
+
     compile 'org.influxdb:influxdb-java:2.10'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 
     testImplementation 'junit:junit:4.12'
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 // jar the sources
